@@ -1,56 +1,62 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { FaPinterest } from "react-icons/fa"; // Import Pinterest Icon
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
+  // Toggle Menu for Mobile
   const handleToggle = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Header animation
-  const headerVariants = {
-    hidden: { opacity: 0, y: -50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-  };
+  // Handle Navbar Hide on Scroll Down & Show on Scroll Up
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        setIsVisible(false); // Hide on scroll down
+      } else {
+        setIsVisible(true); // Show on scroll up
+      }
+      setLastScrollY(window.scrollY);
+    };
 
-  // Menu fade animation
-  const menuVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-    exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" } },
-  };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   return (
     <motion.header
-      variants={headerVariants}
-      initial="hidden"
-      animate="visible"
-      className="fixed top-0 left-0 w-full bg-white shadow-md backdrop-blur-lg z-50 px-6 h-[50px]"
+      initial={{ y: 0, opacity: 1 }}
+      animate={{ y: isVisible ? 0 : -40, opacity: isVisible ? 1 : 0 }} // Moves up slightly & fades out
+      transition={{ duration: 0.6, ease: "easeOut" }} // Slower fade effect
+      className="fixed top-0 left-0 w-full bg-white shadow-md backdrop-blur-lg z-50 px-6 h-[50px] transition-transform"
     >
       <div className="flex justify-between h-[50px] items-center">
-        {/* Logo */}
-        <motion.div className="text-[#FF406E] text-2xl font-bold">
-          Straight From Pintrest
+        {/* Logo with Pinterest Icon */}
+        <motion.div className="flex items-center text-[#FF406E] text-2xl font-bold">
+          <FaPinterest size={30} className="mr-2" /> {/* Pinterest Icon */}
+          Straight From Pinterest
         </motion.div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden h-[50px] items-center md:flex space-x-8 text-lg font-semibold ">
-              <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff]  transition">
-                Home
-              </button>
-              <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
-                About
-              </button>
-              <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
-                Services
-              </button>
-              <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
-                Contact
-              </button>
-
+        <nav className="hidden h-[50px] items-center md:flex space-x-8 text-lg font-semibold">
+          <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
+            Home
+          </button>
+          <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
+            About
+          </button>
+          <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
+            Services
+          </button>
+          <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
+            Contact
+          </button>
         </nav>
-  
+
         {/* Mobile Hamburger Button */}
         <div className="md:hidden">
           <button onClick={handleToggle} className="focus:outline-none relative w-10 h-10 flex flex-col justify-center items-center">
@@ -69,26 +75,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="absolute top-16 left-0 w-full bg-white backdrop-blur-md shadow-lg rounded-b-lg md:hidden"
-          >
-            <nav className="flex flex-col items-center py-4 space-y-4 text-lg font-semibold">
-              <a href="#" className="hover:text-gray-600">Home</a>
-              <a href="#" className="hover:text-gray-600">About</a>
-              <a href="#" className="hover:text-gray-600">Services</a>
-              <a href="#" className="hover:text-gray-600">Contact</a>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.header>
   );
 };

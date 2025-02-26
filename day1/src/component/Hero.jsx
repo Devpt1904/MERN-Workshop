@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const textVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -28,14 +29,14 @@ const Hero = () => {
       }}
     >
       {/* Content */}
-      <div className=" text-center text-white">
+      <div className="text-center text-[#FF007F]">
         <motion.h1
           variants={textVariants}
           custom={0.5}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.1 }}
-          className="text-xl md:text-5xl font-bold mb-4"
+          className="text-4xl font-bold text-white text-with-border"
         >
           Welcome to Our Store
         </motion.h1>
@@ -45,21 +46,26 @@ const Hero = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.1 }}
-          className=" text-[14px] md:text-xl mb-8"
+          className="text-[14px] md:text-xl mb-8 text-with-border"
         >
           Discover the best products at unbeatable prices
         </motion.p>
-        <motion.a
-          href="/shop"
-          variants={textVariants}
-          custom={0.9}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.1 }}
-          className="bg-[#ffffff] text-black  py-3 px-6 rounded-full text-[16px] transition duration-300 hover:bg-[#FF406E] hover:text-white"
-        >
-          Shop Now
-        </motion.a>
+
+        {/* Centering the button */}
+        <div className="flex justify-center">
+          <Link to="/login">
+            <motion.div
+              variants={textVariants}
+              custom={0.9}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.1 }}
+              className="bg-[#ffffff] text-black w-[200px] py-3 px-6 rounded-full text-[16px] transition duration-300 hover:bg-[#FF406E] hover:text-white text-center"
+            >
+              Login
+            </motion.div>
+          </Link>
+        </div>
       </div>
     </motion.section>
   );
