@@ -13,7 +13,8 @@ const ProductCatalog = () => {
 
   return (
     <section className="mt-10 px-20 h-screen">
-      <h2 className="text-2xl font-bold mb-8 text-[#FF406E]">Product Catalog</h2>
+      <h2 className="text-2xl pl-17 mb-2 font-bold  text-[#FF406E]">Product Catalog</h2>
+      <div className="w-[150px] h-1 ml-18 mb-8 bg-[#74031d]"></div>
       <div className="grid grid-cols-4 gap-4">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
