@@ -60,7 +60,7 @@ const Hero = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.1 }}
-              className="bg-[#ffffff] text-black w-[200px] py-3 px-6 rounded-full text-[16px] transition duration-300 hover:bg-[#FF406E] hover:text-white text-center"
+              className="bg-[#ffffff] font-bold text-black w-[200px] py-3 px-6 rounded-full text-[16px] transition duration-300 hover:bg-[#FF406E] hover:text-white text-center"
             >
               Login
             </motion.div>
