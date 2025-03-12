@@ -14,7 +14,7 @@ const textVariants = {
 const Hero = () => {
   return (
     <motion.section
-      initial="hidden"
+      initial="hid9den"
       whileInView="visible"
       viewport={{ once: false, amount: 0.1 }}
       variants={{
@@ -25,7 +25,7 @@ const Hero = () => {
       w-full bg-cover bg-center bg-no-repeat 
       h-[500px] md:h-[600px] lg:h-[700px]"
       style={{
-        backgroundImage: `url("/bg.webp")`,
+        backgroundImage: `url("/bg.jpeg")`,
       }}
     >
       {/* Content */}
