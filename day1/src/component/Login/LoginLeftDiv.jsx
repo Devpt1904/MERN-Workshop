@@ -1,10 +1,11 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import useLogin from "../hooks/useLogin"; // Integrated custom hook
+import useLogin from "../../hooks/useLogin"; // Integrated custom hook
 
-const LoginForm = () => {
+const LoginLeftForm = () => {
   const { formData, errors, handleChange, handleSubmit, loading } = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
 
   const animationSettings = {
     initial: { opacity: 0, x: -50, y: 20 },
@@ -60,15 +61,34 @@ const LoginForm = () => {
           >
             <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
                 className="w-full p-3 rounded-full bg-white/30 text-[#06283D] placeholder-[#05445E]/70 border border-[#05445E]/50 focus:border-[#05445E] focus:ring-[#05445E] outline-none"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-[#05445E]/70 hover:text-[#05445E]"
+              >
+                {showPassword ? "🙈" : "👁"}
+              </button>
+
             </div>
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+          </motion.div>
+
+          <motion.div
+            className="mb-4 flex justify-between items-center "
+            {...animationSettings}
+            transition={animationSettings.transition(0.5)}
+          >
+            <div></div>
+            <Link to="/signup" className="text-[#05445E] text-sm hover:underline">
+              New User? Sign Up
+            </Link>
           </motion.div>
 
           <motion.button

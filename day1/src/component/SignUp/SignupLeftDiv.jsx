@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const fadeInLeft = (delay) => ({
   initial: { opacity: 0, x: -50 },
@@ -9,20 +10,44 @@ const fadeInLeft = (delay) => ({
 });
 
 const SignupLeftDiv = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // Clear error when user types
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
+    try {
+      // First, sign up the user
+      const signupResponse = await axios.post('http://localhost:5000/api/auth/signup', formData);
+      
+      if (signupResponse.data.token) {
+        // If signup returns a token, use it directly
+        localStorage.setItem('token', signupResponse.data.token);
+        navigate('/home');
+      } else {
+        // If signup doesn't return a token, perform login
+        const loginResponse = await axios.post('http://localhost:5000/api/auth/login', {
+          username: formData.username,
+          password: formData.password
+        });
+        
+        localStorage.setItem('token', loginResponse.data.token);
+        navigate('/home');
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'An error occurred during signup');
+      console.error('Signup error:', err);
+    }
   };
 
   return (
@@ -38,6 +63,15 @@ const SignupLeftDiv = () => {
         <motion.h2 className="text-[#05445E]/70 text-sm text-center mb-6">
           Please Enter Your Details
         </motion.h2>
+
+        {error && (
+          <motion.div 
+            className="mb-4 p-3 rounded-lg bg-red-50 text-red-700 text-sm"
+            {...fadeInLeft(0.2)}
+          >
+            {error}
+          </motion.div>
+        )}
 
         <form onSubmit={handleSubmit} noValidate>
           <motion.div className="mb-5" {...fadeInLeft(0.2)}>
@@ -89,6 +123,7 @@ const SignupLeftDiv = () => {
 
           <motion.button
             type="submit"
+            
             className="w-full bg-[#05445E] text-white py-3 rounded-full font-semibold transition-transform duration-100 ease-in-out hover:scale-105 "
             {...fadeInLeft(0.6)}
           >
