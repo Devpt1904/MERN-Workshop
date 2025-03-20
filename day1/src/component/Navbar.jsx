@@ -44,9 +44,6 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden h-[50px] items-center md:flex space-x-8 text-lg font-semibold">
           <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
-            Home
-          </button>
-          <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">
             About
           </button>
           <button className="bg-transparent text-black px-4 py-2 rounded-4xl hover:bg-[#FF406E] hover:text-[#ffffff] transition">

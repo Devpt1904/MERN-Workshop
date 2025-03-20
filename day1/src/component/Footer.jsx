@@ -150,7 +150,7 @@ Footer.BottomSection = () => (
     className="flex justify-center items-center border-t border-gray-700 bg-[#2F2F2F] text-white lg:p-4 lg:rounded-[20px] rounded-[10px] px-2 py-1 text-[14px] md:text-[16px] lg:px-10 lg:text-[19px]"
   >
     <p className="relative inline-block transition-transform duration-300 font-bold  ease-in-out hover:scale-110">
-      © Straight From Pinterest 2025
+      © DEV PATEL 
     </p>
   </motion.div>
 );
